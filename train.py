@@ -1,11 +1,6 @@
-# TensorFlow
 import tensorflow as tf
-
-# Proprocessing tools
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-
-# Keras models and layers
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding
 from tensorflow.keras.layers import Dense
@@ -54,7 +49,6 @@ def build_lstm():
     """
     Build a lstm layer model
     """
-    # Build the model
     model_lstm = Sequential()
     model_lstm.add(Embedding(VOCAB_SIZE, EMBEDDING_DIM, input_length=MAX_LEN))
     model_lstm.add(Dropout(DROPOUT))
@@ -67,7 +61,6 @@ def build_lstm():
         optimizer=Adam(learning_rate=LEARNING_RATE),
         metrics=["accuracy"],
     )
-    # View the model summary
     model_lstm.summary()
     return model_lstm
 
