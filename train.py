@@ -46,7 +46,7 @@ def plot(history, string):
     plt.plot(history.history["val_" + string])
     plt.xlabel("Epochs")
     plt.ylabel(string)
-    plt.legend(["train_" + string, "val_" + string])
+    plt.legend(["train_" + string, "valid_" + string])
     plt.show()
 
 
