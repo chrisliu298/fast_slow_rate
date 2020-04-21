@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 
 
 # Parameters
-TRAIN_SIZE = 2500
+TRAIN_SIZES = list(range(2500, 25000, 2500))
 BATCH_SIZE = 32
 LEARNING_RATE = 5e-5
 PATIENCE = 2
@@ -33,7 +33,7 @@ CALLBACK = tf.keras.callbacks.EarlyStopping(
 )
 
 
-def plot(history, string):
+def plot(history, string, count):
     """
     Plot training acc/loss and validation acc/loss
     """
@@ -42,7 +42,7 @@ def plot(history, string):
     plt.xlabel("Epochs")
     plt.ylabel(string)
     plt.legend(["train_" + string, "valid_" + string])
-    plt.show()
+    plt.savefig(f"trial{count}_{string}.png")
 
 
 def build_lstm():
@@ -65,7 +65,7 @@ def build_lstm():
     return model_lstm
 
 
-def main():
+def train(train_size, trial_count):
     imdb = tfds.load("imdb_reviews", as_supervised=True, shuffle_files=True)
 
     train_data, test_data = imdb["train"], imdb["test"]
@@ -83,8 +83,8 @@ def main():
         testing_sentences.append(str(sentence.numpy()))
         testing_labels.append(label.numpy())
 
-    train_s = training_sentences[:TRAIN_SIZE]
-    train_l = np.array(training_labels[:TRAIN_SIZE])
+    train_s = training_sentences[:train_size]
+    train_l = np.array(training_labels[:train_size])
 
     valid_s = training_sentences[22500:]
     valid_l = np.array(training_labels[22500:])
@@ -128,9 +128,14 @@ def main():
     )
 
     # loss, acc = model_lstm.evaluate(testing_padded, test_l, batch_size=32)
-    plot(history, "accuracy")
-    plot(history, "loss")
+    plot(history, "accuracy", trial_count)
+    plot(history, "loss", trial_count)
 
 
 if __name__ == "__main__":
-    main()
+    trial_counter = 0
+
+    for size in TRAIN_SIZES:
+        trial_counter += 1
+        print("=" * 10 + f" Trial {trial_counter}: {size} training examples " + "=" * 10)
+        train(size, trial_counter)
