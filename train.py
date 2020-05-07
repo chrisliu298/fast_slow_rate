@@ -193,7 +193,7 @@ class GridSearch:
                     print(f"========== Trial {counter} Summary ==========")
                     print(f"   lstm_search_space = {lstm_size}")
                     print(f"  dense_search_space = {dense_size}")
-                    print(f"dropout_search_space = {dropout_rate}")
+                    print(f"dropout_search_space = {dropout_rate}\n")
                     history = model.fit(
                         train_padded,
                         train_sentiments,
