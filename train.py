@@ -16,6 +16,7 @@ import tensorflow_datasets as tfds
 
 # Others
 from statistics import mean
+import json
 import glob
 import random
 import numpy as np
@@ -213,6 +214,7 @@ class GridSearch:
                     }
                     histories.append(log)
                     print()
-                    print(log)
+                    print(f"========== Trial {counter} Results ==========")
+                    print(json.dumps(log, indent=4))
                     print()
         return histories
