@@ -212,6 +212,7 @@ class GridSearch:
                         "valid_acc_final": history.history["val_accuracy"][-1],
                     }
                     histories.append(log)
+                    print()
                     print(log)
                     print()
         return histories
