@@ -211,6 +211,7 @@ class GridSearch:
                         "train_acc_final": history.history["accuracy"][-1],
                         "valid_acc_converge": history.history["val_accuracy"][-11],
                         "valid_acc_final": history.history["val_accuracy"][-1],
+                        "max_valid_acc": max(history.history["val_accuracy"]),
                     }
                     histories.append(log)
                     print()
@@ -218,3 +219,21 @@ class GridSearch:
                     print(json.dumps(log, indent=4))
                     print()
         return histories
+
+    def get_best_model(self):
+        pass
+
+
+if __name__ == "__main__":
+    search = GridSearch(
+        train_size=1000,
+        valid_size=2000,
+        test_size=12500,
+        lstm_search_space=[16, 32, 64, 128, 256],
+        dense_search_space=[16, 32, 64, 128, 256],
+        dropout_search_space=[0.0, 0.1, 0.2, 0.3, 0.4],
+        batch_size=32,
+        learning_rate=1e-3,
+    )
+    data = search.prepare_data()
+    trainer = search.train(data)
