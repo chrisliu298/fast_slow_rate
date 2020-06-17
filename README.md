@@ -1,1 +1,1 @@
-# learning_rate
+# Fast rate and slow rate
